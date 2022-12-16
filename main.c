@@ -40,10 +40,10 @@ int main() {
     FILE *fp2;
     struct {
         char token[10];
-    } Token[100];//dosyadaki kelimelerin struct yapısı oluşturulur
-    char fileName[]="ornek.txt";
-   // printf("dosya adini giriniz:");
-    //gets(fileName);
+    } Token[100];
+    char fileName[40];
+    printf("dosya adini giriniz:");
+    gets(fileName);
     if ((fp = fopen(fileName, "r"))) {
         int j = 0;
         while (!feof(fp)) {
@@ -71,419 +71,1076 @@ int main() {
         }
         int s;
         int AX=0;
-        int BX;
-        int CX;
-        int DX;
+        int BX=0;
+        int CX=0;
+        int DX=0;
         int RAM[300];
-        RAM[0]=1;
-        RAM[1]=2;
         int g=0;
-        printf("\n <<  Tokens  >> \n");
-        for (int b = 0; b <l+1; b++) {
-            printf("<<Token>>");
-            printf("%s", Token[b].token);
-            printf("<<Token>>");
-            printf("\n\n");
-        }
         for (int d = 0; d <  l; d++) {
             switch (Token[d].token[g]) {
-                case  'T':
+                case 'T':
                     d++;
-                    if(Token[d].token[g]=='A') {
-                        switch (Token[d+1].token[g]) {
+                    if (Token[d].token[g] == 'A') {
+                        switch (Token[d + 1].token[g]) {
                             case 'A':
-                                AX=AX+AX;
+                                AX = AX + AX;
                                 d++;
                                 break;
                             case 'B':
-                                AX=AX+BX;
+                                AX = AX + BX;
                                 d++;
                                 break;
                             case 'C':
-                                AX=AX+CX;
+                                AX = AX + CX;
+                                d++;
+                                break;
+                            case 'D':
+                                AX = DX + CX;
                                 d++;
                                 break;
                             case '[':
-                                s=ramController(Token[d+1].token);
-                                AX=AX+RAM[s];
+                                s = ramController(Token[d + 1].token);
+                                AX = AX + RAM[s];
                                 d++;
                                 break;
                             default:
-                                AX=AX+ converterInt(Token[d+1].token);
+                                AX = AX + converterInt(Token[d + 1].token);
                                 d++;
                                 break;
                         }
                     }
-                else if(Token[d].token[g]=='B') {
-                        switch (Token[d+1].token[g]) {
+                    else if (Token[d].token[g] == 'B') {
+                        switch (Token[d + 1].token[g]) {
                             case 'A':
-                                BX=BX+AX;
+                                BX = BX + AX;
                                 d++;
                                 break;
                             case 'B':
-                                BX=BX+BX;
+                                BX = BX + BX;
                                 d++;
                                 break;
                             case 'C':
-                                BX=BX+CX;
+                                BX = BX + CX;
+                                d++;
+                                break;
+                            case 'D':
+                                BX = BX + DX;
                                 d++;
                                 break;
                             case '[':
-                                s= ramController(Token[d+1].token);
-                                BX=BX+RAM[s];
+                                s = ramController(Token[d + 1].token);
+                                BX = BX + RAM[s];
                                 d++;
                                 break;
                             default:
-                                BX=BX+converterInt(Token[d+1].token);
+                                BX = BX + converterInt(Token[d + 1].token);
                                 d++;
                                 break;
                         }
-                    }
-                else if(Token[d].token[g]=='C') {
-                        switch (Token[d+1].token[g]) {
+                    } else if (Token[d].token[g] == 'C') {
+                        switch (Token[d + 1].token[g]) {
                             case 'A':
-                                CX=CX+AX;
+                                CX = CX + AX;
                                 d++;
                                 break;
                             case 'B':
-                                CX=CX+BX;
+                                CX = CX + BX;
                                 d++;
                                 break;
                             case 'C':
-                                CX=CX+CX;
+                                CX = CX + CX;
+                                d++;
+                                break;
+                            case 'D':
+                                CX = CX + DX;
                                 d++;
                                 break;
                             case '[':
-                                s= ramController(Token[d+1].token);
-                                CX=CX+RAM[s];
+                                s = ramController(Token[d + 1].token);
+                                CX = CX + RAM[s];
                                 d++;
                                 break;
                             default:
-                                CX=CX+converterInt(Token[d+1].token);
+                                CX = CX + converterInt(Token[d + 1].token);
+                                d++;
+                                break;
+                        }
+                    } else if (Token[d].token[g] == 'D') {
+                        switch (Token[d + 1].token[g]) {
+                            case 'A':
+                                DX = DX + AX;
+                                d++;
+                                break;
+                            case 'B':
+                                DX = DX + BX;
+                                d++;
+                                break;
+                            case 'C':
+                                DX = DX + CX;
+                                d++;
+                                break;
+                            case 'D':
+                                DX = DX + DX;
+                                d++;
+                                break;
+                            case '[':
+                                s = ramController(Token[d + 1].token);
+                                DX = DX + RAM[s];
+                                d++;
+                                break;
+                            default:
+                                DX = DX + converterInt(Token[d + 1].token);
+                                d++;
+                                break;
+                        }
+                    } else if (Token[d].token[g] == '[') {
+                        int n;
+                        n = ramController(Token[d].token);
+                        switch (Token[d + 1].token[g]) {
+                            case 'A':
+                                RAM[n] = RAM[n] + AX;
+                                printf("\nRAM[%d]:%d",n,RAM[n]);
+                                d++;
+                                break;
+                            case 'B':
+                                RAM[n] = RAM[n] + BX;
+                                printf("\nRAM[%d]:%d",n,RAM[n]);
+                                d++;
+                                break;
+                            case 'C':
+                                RAM[n] = RAM[n] + CX;
+                                printf("\nRAM[%d]:%d",n,RAM[n]);
+                                d++;
+                                break;
+                            case 'D':
+                                RAM[n] = RAM[n] + DX;
+                                printf("\nRAM[%d]:%d",n,RAM[n]);
+                                d++;
+                                break;
+                            case '[':
+                                RAM[n] = RAM[n] + RAM[n];
+                                printf("\nRAM[%d]:%d",n,RAM[n]);
+                                d++;
+                                break;
+                            default:
+                                RAM[n] = RAM[n] + converterInt(Token[d + 1].token);
+                                printf("\nRAM[%d]:%d",n,RAM[n]);
                                 d++;
                                 break;
                         }
                     }
                     break;
                 case 'C':
-                    if(Token[d].token[g+1]=='R'){//CRP ve CIK hangi kelime  olduğu kontrol edilir
+                    if (Token[d].token[g + 1] == 'R') {
                         d++;
-                        if(Token[d].token[g]=='A') {
-                            switch (Token[d+1].token[g]) {
+                        if (Token[d].token[g] == 'A') {
+                            switch (Token[d + 1].token[g]) {
                                 case 'A':
-                                    AX=AX*AX;
+                                    AX = AX * AX;
                                     d++;
                                     break;
                                 case 'B':
-                                    AX=AX*BX;
+                                    AX = AX * BX;
                                     d++;
                                     break;
                                 case 'C':
-                                    AX=AX*CX;
+                                    AX = AX * CX;
+                                    d++;
+                                    break;
+                                case 'D':
+                                    AX = AX * DX;
                                     d++;
                                     break;
                                 case '[':
-                                    s=ramController(Token[d+1].token);
-                                    AX=AX*RAM[s];
+                                    s = ramController(Token[d + 1].token);
+                                    AX = AX * RAM[s];
                                     d++;
                                     break;
                                 default:
-                                    AX=AX* converterInt(Token[d+1].token);
+                                    AX = AX * converterInt(Token[d + 1].token);
                                     d++;
                                     break;
                             }
-                        }
-                        else if(Token[d].token[g]=='B') {
-                            switch (Token[d+1].token[g]) {
+                        } else if (Token[d].token[g] == 'B') {
+                            switch (Token[d + 1].token[g]) {
                                 case 'A':
-                                    BX=BX*AX;
+                                    BX = BX * AX;
                                     d++;
                                     break;
                                 case 'B':
-                                    BX=BX*BX;
+                                    BX = BX * BX;
                                     d++;
                                     break;
                                 case 'C':
-                                    BX=BX*CX;
+                                    BX = BX * CX;
+                                    d++;
+                                    break;
+                                case 'D':
+                                    BX = BX * DX;
                                     d++;
                                     break;
                                 case '[':
-                                    s= ramController(Token[d+1].token);
-                                    BX=BX*RAM[s];
+                                    s = ramController(Token[d + 1].token);
+                                    BX = BX * RAM[s];
                                     d++;
                                     break;
                                 default:
-                                    BX=BX*converterInt(Token[d+1].token);
+                                    BX = BX * converterInt(Token[d + 1].token);
                                     d++;
                                     break;
                             }
-                        }
-                        else if(Token[d].token[g]=='C') {
-                            switch (Token[d+1].token[g]) {
+                        } else if (Token[d].token[g] == 'C') {
+                            switch (Token[d + 1].token[g]) {
                                 case 'A':
-                                    CX=CX*AX;
+                                    CX = CX * AX;
                                     d++;
                                     break;
                                 case 'B':
-                                    CX=CX*BX;
+                                    CX = CX * BX;
                                     d++;
                                     break;
                                 case 'C':
-                                    CX=CX*CX;
+                                    CX = CX * CX;
+                                    d++;
+                                    break;
+                                case 'D':
+                                    CX = CX * DX;
                                     d++;
                                     break;
                                 case '[':
-                                    s= ramController(Token[d+1].token);
-                                    CX=CX*RAM[s];
+                                    s = ramController(Token[d + 1].token);
+                                    CX = CX * RAM[s];
                                     d++;
                                     break;
                                 default:
-                                    CX=CX*converterInt(Token[d+1].token);
+                                    CX = CX * converterInt(Token[d + 1].token);
+                                    d++;
+                                    break;
+                            }
+                        } else if (Token[d].token[g] == 'D') {
+                            switch (Token[d + 1].token[g]) {
+                                case 'A':
+                                    DX = DX * AX;
+                                    d++;
+                                    break;
+                                case 'B':
+                                    DX = DX * BX;
+                                    d++;
+                                    break;
+                                case 'C':
+                                    DX = DX * CX;
+                                    d++;
+                                    break;
+                                case 'D':
+                                    DX = DX * DX;
+                                    d++;
+                                    break;
+                                case '[':
+                                    s = ramController(Token[d + 1].token);
+                                    DX = DX * RAM[s];
+                                    d++;
+                                    break;
+                                default:
+                                    DX = DX * converterInt(Token[d + 1].token);
+                                    d++;
+                                    break;
+                            }
+                        } else if (Token[d].token[g] == '[') {
+                            int n;
+                            n = ramController(Token[d].token);
+                            switch (Token[d + 1].token[g]) {
+                                case 'A':
+                                    RAM[n] = RAM[n] * AX;
+                                    printf("\nRAM[%d]:%d",n,RAM[n]);
+                                    d++;
+                                    break;
+                                case 'B':
+                                    RAM[n] = RAM[n] * BX;
+                                    printf("\nRAM[%d]:%d",n,RAM[n]);
+                                    d++;
+                                    break;
+                                case 'C':
+                                    RAM[n] = RAM[n] * CX;
+                                    printf("\nRAM[%d]:%d",n,RAM[n]);
+                                    d++;
+                                    break;
+                                case 'D':
+                                    RAM[n] = RAM[n] * DX;
+                                    printf("\nRAM[%d]:%d",n,RAM[n]);
+                                    d++;
+                                    break;
+                                case '[':
+                                    RAM[n] = RAM[n] * RAM[n];
+                                    printf("\nRAM[%d]:%d",n,RAM[n]);
+                                    d++;
+                                    break;
+                                default:
+                                    RAM[n] = RAM[n] * converterInt(Token[d + 1].token);
+                                    printf("\nRAM[%d]:%d",n,RAM[n]);
                                     d++;
                                     break;
                             }
                         }
                         break;
-                    } else{
+                    } else {
                         d++;
-                        if(Token[d].token[g]=='A') {
-                            switch (Token[d+1].token[g]) {
+                        if (Token[d].token[g] == 'A') {
+                            switch (Token[d + 1].token[g]) {
                                 case 'A':
-                                    AX=AX-AX;
+                                    AX = AX - AX;
                                     d++;
                                     break;
                                 case 'B':
-                                    AX=AX-BX;
+                                    AX = AX - BX;
                                     d++;
                                     break;
                                 case 'C':
-                                    AX=AX-CX;
+                                    AX = AX - CX;
+                                    d++;
+                                    break;
+                                case 'D':
+                                    AX = AX - DX;
                                     d++;
                                     break;
                                 case '[':
-                                    s=ramController(Token[d+1].token);
-                                    AX=AX-RAM[s];
+                                    s = ramController(Token[d + 1].token);
+                                    AX = AX - RAM[s];
                                     d++;
                                     break;
                                 default:
-                                    AX=AX-converterInt(Token[d+1].token);
+                                    AX = AX - converterInt(Token[d + 1].token);
                                     d++;
                                     break;
                             }
-                        }
-                        else if(Token[d].token[g]=='B') {
-                            switch (Token[d+1].token[g]) {
+                        } else if (Token[d].token[g] == 'B') {
+                            switch (Token[d + 1].token[g]) {
                                 case 'A':
-                                    BX=BX-AX;
+                                    BX = BX - AX;
                                     d++;
                                     break;
                                 case 'B':
-                                    BX=BX-BX;
+                                    BX = BX - BX;
                                     d++;
                                     break;
                                 case 'C':
-                                    BX=BX-CX;
+                                    BX = BX - CX;
+                                    d++;
+                                    break;
+                                case 'D':
+                                    BX = BX - DX;
                                     d++;
                                     break;
                                 case '[':
-                                    s= ramController(Token[d+1].token);
-                                    BX=BX-RAM[s];
+                                    s = ramController(Token[d + 1].token);
+                                    BX = BX - RAM[s];
                                     d++;
                                     break;
                                 default:
-                                    BX=BX-converterInt(Token[d+1].token);
+                                    BX = BX - converterInt(Token[d + 1].token);
                                     d++;
                                     break;
                             }
-                        }
-                        else if(Token[d].token[g]=='C') {
-                            switch (Token[d+1].token[g]) {
+                        } else if (Token[d].token[g] == 'C') {
+                            switch (Token[d + 1].token[g]) {
                                 case 'A':
-                                    CX=CX-AX;
+                                    CX = CX - AX;
                                     d++;
                                     break;
                                 case 'B':
-                                    CX=CX-BX;
+                                    CX = CX - BX;
                                     d++;
                                     break;
                                 case 'C':
-                                    CX=CX-CX;
+                                    CX = CX - CX;
+                                    d++;
+                                    break;
+                                case 'D':
+                                    CX = CX - DX;
                                     d++;
                                     break;
                                 case '[':
-                                    s= ramController(Token[d+1].token);
-                                    CX=CX-RAM[s];
+                                    s = ramController(Token[d + 1].token);
+                                    CX = CX - RAM[s];
                                     d++;
                                     break;
                                 default:
-                                    CX=CX-converterInt(Token[d+1].token);
+                                    CX = CX - converterInt(Token[d + 1].token);
                                     d++;
                                     break;
                             }
+                        } else if (Token[d].token[g] == 'D') {
+                            switch (Token[d + 1].token[g]) {
+                                case 'A':
+                                    DX = DX - AX;
+                                    d++;
+                                    break;
+                                case 'B':
+                                    DX = DX - BX;
+                                    d++;
+                                    break;
+                                case 'C':
+                                    DX = DX - CX;
+                                    d++;
+                                    break;
+                                case 'D':
+                                    DX = DX - DX;
+                                    d++;
+                                    break;
+                                case '[':
+                                    s = ramController(Token[d + 1].token);
+                                    DX = DX - RAM[s];
+                                    d++;
+                                    break;
+                                default:
+                                    DX = DX - converterInt(Token[d + 1].token);
+                                    d++;
+                                    break;
+                            }
+                        } else if (Token[d].token[g] == '[') {
+                            int n;
+                            n = ramController(Token[d].token);
+                            switch (Token[d + 1].token[g]) {
+                                case 'A':
+                                    RAM[n] = RAM[n] - AX;
+                                    printf("\nRAM[%d]:%d",n,RAM[n]);
+                                    d++;
+                                    break;
+                                case 'B':
+                                    RAM[n] = RAM[n] - BX;
+                                    printf("\nRAM[%d]:%d",n,RAM[n]);
+                                    d++;
+                                    break;
+                                case 'C':
+                                    RAM[n] = RAM[n] - CX;
+                                    printf("\nRAM[%d]:%d",n,RAM[n]);
+                                    d++;
+                                    break;
+                                case 'D':
+                                    RAM[n] = RAM[n] - DX;
+                                    printf("\nRAM[%d]:%d",n,RAM[n]);
+                                    d++;
+                                    break;
+                                case '[':
+                                    RAM[n] = RAM[n] - RAM[n];
+                                    printf("\nRAM[%d]:%d",n,RAM[n]);
+                                    d++;
+                                    break;
+                                default:
+                                    RAM[n] = RAM[n] - converterInt(Token[d + 1].token);
+                                    printf("\nRAM[%d]:%d",n,RAM[n]);
+                                    d++;
+                                    break;
+                            }
+                            break;
                         }
-                        break;
                     }
-                    break;
                 case 'A':
                     d++;
-                    if(Token[d].token[g]=='A'){
-                        AX=converterInt(Token[d+1].token);
-                        d++;
-                    }
-                    if(Token[d].token[g]=='B'){
-                        BX=converterInt(Token[d+1].token);
-                        d++;
-                    }
-                    if(Token[d].token[g]=='C'){
-                        CX=converterInt(Token[d+1].token);
-                        d++;
-                    }
-                    break;
-                case 'B':
-                    d++;
-                    if(Token[d].token[g]=='A') {
-                        switch (Token[d+1].token[g]) {
+                    if (Token[d].token[g] == 'A') {
+                        switch (Token[d + 1].token[g]) {
                             case 'A':
-                                DX=+AX % AX;
-                                AX=AX/AX;
+                                AX = AX;
                                 d++;
                                 break;
                             case 'B':
-                                DX+=AX % BX;
-                                AX=AX/BX;
+                                AX = BX;
                                 d++;
                                 break;
                             case 'C':
-                                DX=+AX%CX;
-                                AX=AX/CX;
+                                AX = CX;
                                 d++;
                                 break;
                             case 'D':
-                                DX=+AX%DX;
-                                AX=AX/DX;
+                                AX =  DX;
                                 d++;
                                 break;
                             case '[':
-                                s=ramController(Token[d+1].token);
-                                DX=+AX%s;
-                                AX=AX/RAM[s];
+                                s = ramController(Token[d + 1].token);
+                                AX =  RAM[s];
                                 d++;
                                 break;
                             default:
-                                DX=+AX%converterInt(Token[d+1].token);
-                                AX=AX/converterInt(Token[d+1].token);
+                                AX = converterInt(Token[d + 1].token);
                                 d++;
                                 break;
                         }
                     }
-                    else if(Token[d].token[g]=='B') {
-                        switch (Token[d+1].token[g]) {
+                    else if (Token[d].token[g] == 'B') {
+                        switch (Token[d + 1].token[g]) {
                             case 'A':
-                                DX=+BX%BX;
-                                BX=BX/AX;
+                                BX =  AX;
                                 d++;
                                 break;
                             case 'B':
-                                DX=+BX%BX;
-                                BX=BX/BX;
+                                BX =  BX;
                                 d++;
                                 break;
                             case 'C':
-                                DX=+BX%CX;
-                                BX=BX/CX;
+                                BX =  CX;
                                 d++;
                                 break;
                             case 'D':
-                                DX=+BX%DX;
-                                BX=BX/DX;
+                                BX =  DX;
                                 d++;
                                 break;
                             case '[':
-                                s= ramController(Token[d+1].token);
-                                DX=+BX%s;
-                                BX=BX/RAM[s];
+                                s = ramController(Token[d + 1].token);
+                                BX =  RAM[s];
                                 d++;
                                 break;
                             default:
-                                DX=+BX% converterInt(Token[d+1].token);
-                                BX=BX/converterInt(Token[d+1].token);
+                                BX =  converterInt(Token[d + 1].token);
                                 d++;
                                 break;
                         }
-                    }
-                    else if(Token[d].token[g]=='C') {
-                        switch (Token[d+1].token[g]) {
+                    } else if (Token[d].token[g] == 'C') {
+                        switch (Token[d + 1].token[g]) {
                             case 'A':
-                                DX=+CX%AX;
-                                CX=CX/AX;
+                                CX =  AX;
                                 d++;
                                 break;
                             case 'B':
-                                DX=+CX%BX;
-                                CX=CX/BX;
+                                CX =  BX;
                                 d++;
                                 break;
                             case 'C':
-                                DX=+CX%CX;
-                                CX=CX/CX;
+                                CX =  CX;
+                                d++;
+                                break;
+                            case 'D':
+                                CX =  DX;
                                 d++;
                                 break;
                             case '[':
-                                s=ramController(Token[d+1].token);
-                                DX=+CX%s;
-                                CX=CX/RAM[s];
+                                s = ramController(Token[d + 1].token);
+                                CX =  RAM[s];
                                 d++;
                                 break;
                             default:
-                                DX=+CX%converterInt(Token[d+1].token);;
-                                CX=CX/converterInt(Token[d+1].token);
+                                CX = converterInt(Token[d + 1].token);
+                                d++;
+                                break;
+                        }
+                    } else if (Token[d].token[g] == 'D') {
+                        switch (Token[d + 1].token[g]) {
+                            case 'A':
+                                DX =  AX;
+                                d++;
+                                break;
+                            case 'B':
+                                DX =  BX;
+                                d++;
+                                break;
+                            case 'C':
+                                DX =  CX;
+                                d++;
+                                break;
+                            case 'D':
+                                DX =  DX;
+                                d++;
+                                break;
+                            case '[':
+                                s = ramController(Token[d + 1].token);
+                                DX =  RAM[s];
+                                d++;
+                                break;
+                            default:
+                                DX =  converterInt(Token[d + 1].token);
+                                d++;
+                                break;
+                        }
+                    } else if (Token[d].token[g] == '[') {
+                        int n;
+                        n = ramController(Token[d].token);
+                        switch (Token[d + 1].token[g]) {
+                            case 'A':
+                                RAM[n] =  AX;
+                                printf("\nRAM[%d]:%d",n,RAM[n]);
+                                d++;
+                                break;
+                            case 'B':
+                                RAM[n] =  BX;
+                                printf("\nRAM[%d]:%d",n,RAM[n]);
+                                d++;
+                                break;
+                            case 'C':
+                                RAM[n] =  CX;
+                                printf("\nRAM[%d]:%d",n,RAM[n]);
+                                d++;
+                                break;
+                            case 'D':
+                                RAM[n] =  DX;
+                                printf("\nRAM[%d]:%d",n,RAM[n]);
+                                d++;
+                                break;
+                            case '[':
+
+                                RAM[n] =  RAM[ramController(Token[d+1].token)];
+                                printf("\nRAM[%d]:%d",n,RAM[n]);
+                                d++;
+                                break;
+                            default:
+                                RAM[n] =  converterInt(Token[d + 1].token);
+                                printf("\nRAM[%d]:%d",n,RAM[n]);
                                 d++;
                                 break;
                         }
                     }
                     break;
-                case 'V':
-                    if(Token[d].token[g+2]=='Y'){
+                        case 'B':
+                            d++;
+                        if (Token[d].token[g] == 'A') {
+                            switch (Token[d + 1].token[g]) {
+                                case 'A':
+                                    DX = AX % AX;
+                                    AX = AX / AX;
+                                    d++;
+                                    break;
+                                case 'B':
+                                    DX = AX % BX;
+                                    AX = AX / BX;
+                                    d++;
+                                    break;
+                                case 'C':
+                                    DX = AX % CX;
+                                    AX = AX / CX;
+                                    d++;
+                                    break;
+                                case 'D':
+                                    DX = AX % DX;
+                                    AX = AX / DX;
+                                    d++;
+                                    break;
+                                case '[':
+                                    s = ramController(Token[d+1].token);
+                                    DX = AX % RAM[s];
+                                    AX = AX / RAM[s];
+                                    d++;
+                                    break;
+                                default:
+                                    DX = AX % converterInt(Token[d + 1].token);
+                                    AX = AX / converterInt(Token[d + 1].token);
+                                    d++;
+                                    break;
+                            }
+                        } else if (Token[d].token[g] == 'B') {
+                            switch (Token[d + 1].token[g]) {
+                                case 'A':
+                                    DX = BX % BX;
+                                    BX = BX / AX;
+                                    d++;
+                                    break;
+                                case 'B':
+                                    DX = BX % BX;
+                                    BX = BX / BX;
+                                    d++;
+                                    break;
+                                case 'C':
+                                    DX = BX % CX;
+                                    BX = BX / CX;
+                                    d++;
+                                    break;
+                                case 'D':
+                                    DX = BX % DX;
+                                    BX = BX / DX;
+                                    d++;
+                                    break;
+                                case '[':
+                                    s = ramController(Token[d + 1].token);
+                                    DX = BX % RAM[s];
+                                    BX = BX / RAM[s];
+                                    d++;
+                                    break;
+                                default:
+                                    DX = BX % converterInt(Token[d + 1].token);
+                                    BX = BX / converterInt(Token[d + 1].token);
+                                    d++;
+                                    break;
+                            }
+                        } else if (Token[d].token[g] == 'C') {
+                            switch (Token[d + 1].token[g]) {
+                                case 'A':
+                                    DX = CX % AX;
+                                    CX = CX / AX;
+                                    d++;
+                                    break;
+                                case 'B':
+                                    DX = +CX % BX;
+                                    CX = CX / BX;
+                                    d++;
+                                    break;
+                                case 'C':
+                                    DX = +CX % CX;
+                                    CX = CX / CX;
+                                    d++;
+                                    break;
+                                case '[':
+                                    s = ramController(Token[d + 1].token);
+                                    DX = CX % RAM[s];
+                                    CX = CX / RAM[s];
+                                    d++;
+                                    break;
+                                default:
+                                    DX = CX % converterInt(Token[d + 1].token);
+                                    CX = CX / converterInt(Token[d + 1].token);
+                                    d++;
+                                    break;
+                            }
+                        } else if (Token[d].token[g] == '[') {
+                            int n;
+                            n = ramController(Token[d].token);
+                            switch (Token[d + 1].token[g]) {
+                                case 'A':
+                                    DX = RAM[n] % AX;
+                                    RAM[n] = RAM[n] / AX;
+                                    printf("\nRAM[%d]:%d",n,RAM[n]);
+                                    d++;
+                                    break;
+                                case 'B':
+                                    DX = RAM[n] % BX;
+                                    RAM[n] = RAM[n] / BX;
+                                    printf("\nRAM[%d]:%d",n,RAM[n]);
+                                    d++;
+                                    break;
+                                case 'C':
+                                    DX = RAM[n] % CX;
+                                    RAM[n] = RAM[n] / CX;
+                                    printf("\nRAM[%d]:%d",n,RAM[n]);
+                                    d++;
+                                    break;
+                                case 'D':
+                                    DX = RAM[n] % DX;
+                                    RAM[n] = RAM[n] / DX;
+                                    printf("\nRAM[%d]:%d",n,RAM[n]);
+                                    d++;
+                                    break;
+                                case '[':
+                                    DX = RAM[n] % RAM[ramController(Token[d+1].token)];
+                                    RAM[n] = RAM[n] / RAM[ramController(Token[d+1].token)];
+                                    printf("\nRAM[%d]:%d",n,RAM[n]);
+                                    d++;
+                                    break;
+                                default:
+                                    DX = RAM[n] % converterInt(Token[d + 1].token);
+                                    RAM[n] = RAM[n] / converterInt(Token[d + 1].token);
+                                    printf("\nRAM[%d]:%d",n,RAM[n]);
+                                    d++;
+                                    break;
+                            }
+                            break;
+                        }
+                        case 'V':
+                                if (Token[d].token[g + 2] == 'Y') {
+                                    d++;
+                                    if (Token[d].token[g] == 'A') {
+                                        switch (Token[d + 1].token[g]) {
+                                            case 'A':
+                                                AX = AX | AX;
+                                                d++;
+                                                break;
+                                            case 'B':
+                                                AX = AX | BX;
+                                                d++;
+                                                break;
+                                            case 'C':
+                                                AX = AX | CX;
+                                                d++;
+                                                break;
+                                            case 'D':
+                                                AX = DX | CX;
+                                                d++;
+                                                break;
+                                            case '[':
+                                                s = ramController(Token[d + 1].token);
+                                                AX = AX | RAM[s];
+                                                d++;
+                                                break;
+                                            default:
+                                                AX = AX | converterInt(Token[d + 1].token);
+                                                d++;
+                                                break;
+                                        }
+                                    }
+                                    else if (Token[d].token[g] == 'B') {
+                                        switch (Token[d + 1].token[g]) {
+                                            case 'A':
+                                                BX = BX | AX;
+                                                d++;
+                                                break;
+                                            case 'B':
+                                                BX = BX | BX;
+                                                d++;
+                                                break;
+                                            case 'C':
+                                                BX = BX + CX;
+                                                d++;
+                                                break;
+                                            case 'D':
+                                                BX = BX | DX;
+                                                d++;
+                                                break;
+                                            case '[':
+                                                s = ramController(Token[d + 1].token);
+                                                BX = BX | RAM[s];
+                                                d++;
+                                                break;
+                                            default:
+                                                BX = BX | converterInt(Token[d + 1].token);
+                                                d++;
+                                                break;
+                                        }
+                                    } else if (Token[d].token[g] == 'C') {
+                                        switch (Token[d + 1].token[g]) {
+                                            case 'A':
+                                                CX = CX | AX;
+                                                d++;
+                                                break;
+                                            case 'B':
+                                                CX = CX | BX;
+                                                d++;
+                                                break;
+                                            case 'C':
+                                                CX = CX | CX;
+                                                d++;
+                                                break;
+                                            case 'D':
+                                                CX = CX | DX;
+                                                d++;
+                                                break;
+                                            case '[':
+                                                s = ramController(Token[d + 1].token);
+                                                CX = CX | RAM[s];
+                                                d++;
+                                                break;
+                                            default:
+                                                CX = CX | converterInt(Token[d + 1].token);
+                                                d++;
+                                                break;
+                                        }
+                                    } else if (Token[d].token[g] == 'D') {
+                                        switch (Token[d + 1].token[g]) {
+                                            case 'A':
+                                                DX = DX | AX;
+                                                d++;
+                                                break;
+                                            case 'B':
+                                                DX = DX | BX;
+                                                d++;
+                                                break;
+                                            case 'C':
+                                                DX = DX | CX;
+                                                d++;
+                                                break;
+                                            case 'D':
+                                                DX = DX | DX;
+                                                d++;
+                                                break;
+                                            case '[':
+                                                s = ramController(Token[d + 1].token);
+                                                DX = DX | RAM[s];
+                                                d++;
+                                                break;
+                                            default:
+                                                DX = DX | converterInt(Token[d + 1].token);
 
-                    } else{
-
-                    }
-                    break;
-                case 'D':
-                    if(Token[d].token[g+1]=='S')
-                    {
-                        if(Token[d].token[g+2]=='D'){
-
-                        } else{
-
+                                                d++;
+                                                break;
+                                        }
+                                    } else if (Token[d].token[g] == '[') {
+                                        int n;
+                                        n = ramController(Token[d].token);
+                                        switch (Token[d + 1].token[g]) {
+                                            case 'A':
+                                                RAM[n] = RAM[n] | AX;
+                                                printf("\nRAM[%d]:%d",n,RAM[n]);
+                                                d++;
+                                                break;
+                                            case 'B':
+                                                RAM[n] = RAM[n] | BX;
+                                                printf("\nRAM[%d]:%d",n,RAM[n]);
+                                                d++;
+                                                break;
+                                            case 'C':
+                                                RAM[n] = RAM[n] | CX;
+                                                printf("\nRAM[%d]:%d",n,RAM[n]);
+                                                d++;
+                                                break;
+                                            case 'D':
+                                                RAM[n] = RAM[n] | DX;
+                                                printf("\nRAM[%d]:%d",n,RAM[n]);
+                                                d++;
+                                                break;
+                                            case '[':
+                                                RAM[n] = RAM[n] | RAM[n];
+                                                printf("\nRAM[%d]:%d",n,RAM[n]);
+                                                d++;
+                                                break;
+                                            default:
+                                                RAM[n] = RAM[n] | converterInt(Token[d + 1].token);
+                                                printf("\nRAM[%d]:%d",n,RAM[n]);
+                                                d++;
+                                                break;
+                                        }
+                                    }
+                                    break;
+                                } else {
+                                    d++;
+                                    if (Token[d].token[g] == 'A') {
+                                        switch (Token[d + 1].token[g]) {
+                                            case 'A':
+                                                AX = AX & AX;
+                                                d++;
+                                                break;
+                                            case 'B':
+                                                AX = AX & BX;
+                                                d++;
+                                                break;
+                                            case 'C':
+                                                AX = AX & CX;
+                                                d++;
+                                                break;
+                                            case 'D':
+                                                AX = DX & CX;
+                                                d++;
+                                                break;
+                                            case '[':
+                                                s = ramController(Token[d + 1].token);
+                                                AX = AX & RAM[s];
+                                                d++;
+                                                break;
+                                            default:
+                                                AX = AX & converterInt(Token[d + 1].token);
+                                                d++;
+                                                break;
+                                        }
+                                    }
+                                    else if (Token[d].token[g] == 'B') {
+                                        switch (Token[d + 1].token[g]) {
+                                            case 'A':
+                                                BX = BX & AX;
+                                                d++;
+                                                break;
+                                            case 'B':
+                                                BX = BX & BX;
+                                                d++;
+                                                break;
+                                            case 'C':
+                                                BX = BX & CX;
+                                                d++;
+                                                break;
+                                            case 'D':
+                                                BX = BX & DX;
+                                                d++;
+                                                break;
+                                            case '[':
+                                                s = ramController(Token[d + 1].token);
+                                                BX = BX & RAM[s];
+                                                d++;
+                                                break;
+                                            default:
+                                                BX = BX & converterInt(Token[d + 1].token);
+                                                d++;
+                                                break;
+                                        }
+                                    } else if (Token[d].token[g] == 'C') {
+                                        switch (Token[d + 1].token[g]) {
+                                            case 'A':
+                                                CX = CX & AX;
+                                                d++;
+                                                break;
+                                            case 'B':
+                                                CX = CX & BX;
+                                                d++;
+                                                break;
+                                            case 'C':
+                                                CX = CX & CX;
+                                                d++;
+                                                break;
+                                            case 'D':
+                                                CX = CX & DX;
+                                                d++;
+                                                break;
+                                            case '[':
+                                                s = ramController(Token[d + 1].token);
+                                                CX = CX & RAM[s];
+                                                d++;
+                                                break;
+                                            default:
+                                                CX = CX & converterInt(Token[d + 1].token);
+                                                d++;
+                                                break;
+                                        }
+                                    } else if (Token[d].token[g] == 'D') {
+                                        switch (Token[d + 1].token[g]) {
+                                            case 'A':
+                                                DX = DX & AX;
+                                                d++;
+                                                break;
+                                            case 'B':
+                                                DX = DX & BX;
+                                                d++;
+                                                break;
+                                            case 'C':
+                                                DX = DX & CX;
+                                                d++;
+                                                break;
+                                            case 'D':
+                                                DX = DX & DX;
+                                                d++;
+                                                break;
+                                            case '[':
+                                                s = ramController(Token[d + 1].token);
+                                                DX = DX & RAM[s];
+                                                d++;
+                                                break;
+                                            default:
+                                                DX = DX & converterInt(Token[d + 1].token);
+                                                d++;
+                                                break;
+                                        }
+                                    } else if (Token[d].token[g] == '[') {
+                                        int n;
+                                        n = ramController(Token[d].token);
+                                        switch (Token[d + 1].token[g]) {
+                                            case 'A':
+                                                RAM[n] = RAM[n] & AX;
+                                                printf("\nRAM[%d]:%d",n,RAM[n]);
+                                                d++;
+                                                break;
+                                            case 'B':
+                                                RAM[n] = RAM[n] & BX;
+                                                printf("\nRAM[%d]:%d",n,RAM[n]);
+                                                d++;
+                                                break;
+                                            case 'C':
+                                                RAM[n] = RAM[n] & CX;
+                                                printf("\nRAM[%d]:%d",n,RAM[n]);
+                                                d++;
+                                                break;
+                                            case 'D':
+                                                RAM[n] = RAM[n] & DX;
+                                                printf("\nRAM[%d]:%d",n,RAM[n]);
+                                                d++;
+                                                break;
+                                            case '[':
+                                                RAM[n] = RAM[n] & RAM[n];
+                                                printf("\nRAM[%d]:%d",n,RAM[n]);
+                                                d++;
+                                                break;
+                                            default:
+                                                RAM[n] = RAM[n] & converterInt(Token[d + 1].token);
+                                                printf("\nRAM[%d]:%d",n,RAM[n]);
+                                                d++;
+                                                break;
+                                        }
+                                    }
+                                }
+                            break;
                         }
                     }
-                    else if(Token[d].token[g+1]=='A')
-                    {
-
-                    }
-                    else if(Token[d].token[g+1]=='K')
-                    {
-
-                    }
-                    else if(Token[d].token[g+1]=='B')
-                    {
-
-                    }
-                    break;
-                default:
-                    //printf("\nhatali");
-                    break;
+                    printf("\nAX:%d", AX);
+                    printf("\nBX:%d", BX);
+                    printf("\nCX:%d", CX);
+                    printf("\nDX:%d", DX);
             }
         }
-       // printf("\n\n\n");
-        printf("\n\n\nAX:%d",AX);
-        printf("\n\n\nBX:%d",BX);
-        printf("\n\n\nCX:%d",CX);
-        printf("\n\n\n\nDX:%d",DX);
-    }
-    else {
-        printf("dosya bulunamadi");
-    }
-
-}
