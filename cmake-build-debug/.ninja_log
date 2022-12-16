@@ -1,0 +1,21 @@
+# ninja log v5
+2	95	6928393684561641	CMakeFiles/AssemblerCompiler.dir/main.c.obj	6aaae82a9c927842
+95	167	6928393685261303	AssemblerCompiler.exe	d8a0a84f0b4ce5f5
+1	71	6928397105149838	CMakeFiles/AssemblerCompiler.dir/main.c.obj	6aaae82a9c927842
+72	135	6928397105758230	AssemblerCompiler.exe	d8a0a84f0b4ce5f5
+1	69	6928397696237924	CMakeFiles/AssemblerCompiler.dir/main.c.obj	6aaae82a9c927842
+69	133	6928397696853674	AssemblerCompiler.exe	d8a0a84f0b4ce5f5
+1	71	6928399613322624	CMakeFiles/AssemblerCompiler.dir/main.c.obj	6aaae82a9c927842
+71	136	6928399613939689	AssemblerCompiler.exe	d8a0a84f0b4ce5f5
+1	70	6928402608861951	CMakeFiles/AssemblerCompiler.dir/main.c.obj	6aaae82a9c927842
+71	136	6928402609501352	AssemblerCompiler.exe	d8a0a84f0b4ce5f5
+2	69	6928403075682401	CMakeFiles/AssemblerCompiler.dir/main.c.obj	6aaae82a9c927842
+69	134	6928403076297107	AssemblerCompiler.exe	d8a0a84f0b4ce5f5
+1	67	6928403365332384	CMakeFiles/AssemblerCompiler.dir/main.c.obj	6aaae82a9c927842
+68	132	6928403365954227	AssemblerCompiler.exe	d8a0a84f0b4ce5f5
+1	69	6928403589327465	CMakeFiles/AssemblerCompiler.dir/main.c.obj	6aaae82a9c927842
+69	132	6928403589930721	AssemblerCompiler.exe	d8a0a84f0b4ce5f5
+2	69	6928404033103237	CMakeFiles/AssemblerCompiler.dir/main.c.obj	6aaae82a9c927842
+69	134	6928404033724424	AssemblerCompiler.exe	d8a0a84f0b4ce5f5
+2	74	6928405969580287	CMakeFiles/AssemblerCompiler.dir/main.c.obj	6aaae82a9c927842
+75	147	6928405970269427	AssemblerCompiler.exe	d8a0a84f0b4ce5f5

@@ -1,0 +1,3 @@
+C:/Users/erayb/CLionProjects/assembler/cmake-build-debug/CMakeFiles/AssemblerCompiler.dir
+C:/Users/erayb/CLionProjects/assembler/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/erayb/CLionProjects/assembler/cmake-build-debug/CMakeFiles/rebuild_cache.dir
